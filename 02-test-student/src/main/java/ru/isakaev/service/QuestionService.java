@@ -1,11 +1,14 @@
 package ru.isakaev.service;
 
+import ru.isakaev.model.Question;
+
+import java.util.Set;
+
 /**
  * Service
  */
 public interface QuestionService {
 
-        void loadQuestions();
+        Set<Question> loadQuestions();
 
-        void testStudent();
 }
