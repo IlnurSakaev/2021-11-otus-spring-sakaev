@@ -16,9 +16,9 @@ public class StudentServiceImpl implements StudentService {
     @Value("${attempt.count}")
     private Integer attemptCount;
 
-    Set<Student> students = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     @Override
     public Student getStudent(){
@@ -31,8 +31,6 @@ public class StudentServiceImpl implements StudentService {
         for (Student s: students){
             if (s.getFirstName().equalsIgnoreCase(firstName)&& s.getLastName().equalsIgnoreCase(lastName)){
                 student = s;
-                if (student.getAvailableAttempts() < 1){
-                }
             }
         }
         if (student == null){

@@ -15,13 +15,13 @@ public class TestServiceImpl implements TestService {
     @Value("${passing.barrier}")
     private Integer passingBarrier;
 
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
-    Set<Question> questions = new HashSet<>();
+    private Set<Question> questions = new HashSet<>();
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public TestServiceImpl(StudentService studentService, QuestionService questionService) {
         this.studentService = studentService;

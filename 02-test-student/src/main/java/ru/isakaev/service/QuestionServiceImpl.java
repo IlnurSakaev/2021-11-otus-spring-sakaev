@@ -19,7 +19,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     private QuestionDao questionDao;
 
-    Set<Question> questions = new HashSet<>();
+    private Set<Question> questions = new HashSet<>();
 
     public QuestionServiceImpl(QuestionDao questionDao) {
         this.questionDao = questionDao;
