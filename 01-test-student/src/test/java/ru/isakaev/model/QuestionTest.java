@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 
 @DisplayName("Test QuestionTest")
 class QuestionTest {
@@ -14,7 +15,7 @@ class QuestionTest {
     @BeforeEach
     void setUp() {
         values = new String[]{"One plus one", "one", "two", "three"};
-        question = new Question(values);
+        question = new Question(values[0], Arrays.copyOfRange(values,1,values.length));
     }
 
     @Test

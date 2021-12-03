@@ -1,31 +1,22 @@
 package ru.isakaev.dao;
 
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.InputStream;
 
 /**
  * Dao implementation
  */
 public class QuestionDaoImpl implements QuestionDao {
 
-    private final String FILE_NAME;
+    private final String fileName;
 
 
-    public QuestionDaoImpl(String file_name) {
-        FILE_NAME = file_name;
+    public QuestionDaoImpl(String fileName) {
+        this.fileName = fileName;
     }
 
-
     @Override
-    public File getFile() {
-        URL systemResource = ClassLoader.getSystemResource(FILE_NAME);
-        File file = null;
-        try {
-            file= new File(systemResource.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return file;
+    public InputStream getInputStream() {
+        InputStream resourceAsStream = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+        return resourceAsStream;
     }
 }
