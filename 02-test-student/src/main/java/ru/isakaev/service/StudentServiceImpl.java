@@ -5,6 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.isakaev.model.Student;
 
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -38,5 +39,13 @@ public class StudentServiceImpl implements StudentService {
             students.add(student);
         }
         return student;
+    }
+
+    public void setAttemptCount(Integer attemptCount) {
+        this.attemptCount = attemptCount;
+    }
+
+    public void setScanner(InputStream scanner) {
+        this.scanner = new Scanner(scanner);
     }
 }
