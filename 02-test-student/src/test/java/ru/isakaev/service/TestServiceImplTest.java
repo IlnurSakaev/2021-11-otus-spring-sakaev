@@ -44,8 +44,6 @@ class TestServiceImplTest {
         scanner.setAccessible(true);
         scanner.set(test, new Scanner(new ByteArrayInputStream("three\ntwo\nexit".getBytes())));
         try {
-//            test.setPassingBarrier(1);
-//            test.setInputStream(new ByteArrayInputStream("three\ntwo\nexit".getBytes()));
             test.testStudent();
         } finally {
             System.setIn(stdin);
