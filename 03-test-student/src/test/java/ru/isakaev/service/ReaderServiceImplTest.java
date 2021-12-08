@@ -2,6 +2,7 @@ package ru.isakaev.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.ByteArrayInputStream;
@@ -11,12 +12,14 @@ import java.util.Scanner;
 
 
 
-@SpringBootTest
+@SpringBootTest(classes = ReaderServiceImpl.class)
 class ReaderServiceImplTest {
+
+    @Autowired
+    private ReaderService readerService;
 
     @Test
     void readFromConsole() {
-        ReaderService readerService = new ReaderServiceImpl();
         InputStream stdin = System.in;
 
         try {

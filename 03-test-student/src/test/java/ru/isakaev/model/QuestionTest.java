@@ -21,8 +21,6 @@ class QuestionTest {
 
     @Test
     void shouldHaveCorrectConstructor() {
-        values = new String[]{"One plus one", "one", "two", "*three"};
-        question = new Question(values[0], Arrays.copyOfRange(values,1,values.length), values[2]);
         Assertions.assertThat(question.getTextQuestion()).isEqualTo("One plus one");
     }
 
