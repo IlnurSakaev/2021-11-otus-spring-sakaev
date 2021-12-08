@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.isakaev.model.Question;
 import ru.isakaev.model.Student;
 
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -112,16 +111,5 @@ public class TestServiceImpl implements TestService {
         }
         builder.append('\n');
         return builder.toString();
-    }
-
-    public void setInputStream(InputStream systemIn){
-
-        System.setIn(systemIn);
-        scanner = new Scanner(System.in);
-    }
-
-    public void setPassingBarrier(Integer passingBarrier){
-
-        this.passingBarrier = passingBarrier;
     }
 }

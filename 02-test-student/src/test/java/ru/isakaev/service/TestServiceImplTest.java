@@ -8,17 +8,14 @@ import ru.isakaev.model.Student;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Scanner;
 import java.util.Set;
 
 class TestServiceImplTest {
 
-    @Mock
-    private StudentService studentService;
-    @Mock
-    private QuestionService questionService;
-
     @Test
-    void testStudent() {
+    void testStudent() throws NoSuchFieldException, IllegalAccessException {
 
         Student student = new Student("Ilnur", "Sakaev", 3);
         Set<Question> questionSet = Set.of(
@@ -38,9 +35,17 @@ class TestServiceImplTest {
         TestServiceImpl test = new TestServiceImpl(studentService, questionService);
 
         InputStream stdin = System.in;
+
+        Field passingBarrier = test.getClass().getDeclaredField("passingBarrier");
+        passingBarrier.setAccessible(true);
+        passingBarrier.set(test, 1);
+
+        Field scanner = test.getClass().getDeclaredField("scanner");
+        scanner.setAccessible(true);
+        scanner.set(test, new Scanner(new ByteArrayInputStream("three\ntwo\nexit".getBytes())));
         try {
-            test.setPassingBarrier(1);
-            test.setInputStream(new ByteArrayInputStream("three\ntwo\nexit".getBytes()));
+//            test.setPassingBarrier(1);
+//            test.setInputStream(new ByteArrayInputStream("three\ntwo\nexit".getBytes()));
             test.testStudent();
         } finally {
             System.setIn(stdin);
