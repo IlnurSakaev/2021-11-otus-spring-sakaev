@@ -3,7 +3,7 @@ package ru.isakaev.dao;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import java.io.InputStream;
 
 class QuestionDaoImplTest {
 
@@ -12,8 +12,8 @@ class QuestionDaoImplTest {
     @Test
     void getFile_void_success() {
         QuestionDaoImpl questionDao = new QuestionDaoImpl(FILE_NAME);
-        File file = questionDao.getFile();
+        InputStream inputStream = questionDao.getInputStream();
 
-        Assertions.assertThat(file).exists();
+        Assertions.assertThat(inputStream).isNotEmpty();
     }
 }

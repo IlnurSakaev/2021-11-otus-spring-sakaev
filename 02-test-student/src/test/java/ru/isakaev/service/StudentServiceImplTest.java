@@ -2,7 +2,6 @@ package ru.isakaev.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import ru.isakaev.model.Student;
 
 import java.io.ByteArrayInputStream;
@@ -14,7 +13,7 @@ class StudentServiceImplTest {
 
     @Test
     void getStudent() throws NoSuchFieldException, IllegalAccessException {
-        StudentServiceImpl studentService = new StudentServiceImpl();
+        StudentService studentService = new StudentServiceImpl();
         Student testStudent = new Student("Ilnur", "Sakaev", 3);
         InputStream stdin = System.in;
 

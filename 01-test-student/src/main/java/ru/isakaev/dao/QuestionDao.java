@@ -1,11 +1,11 @@
 package ru.isakaev.dao;
 
-import java.io.File;
+import java.io.InputStream;
 
 /**
  * Dao
  */
 public interface QuestionDao {
 
-    File getFile();
+    InputStream getInputStream();
 }
