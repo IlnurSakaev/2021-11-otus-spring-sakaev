@@ -1,12 +1,7 @@
 package ru.isakaev.service;
 
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD
-import org.mockito.Mock;
-import org.mockito.Mockito;
-=======
 import org.mockito.Mockito;;
->>>>>>> main
 import ru.isakaev.model.Question;
 import ru.isakaev.model.Student;
 
@@ -37,7 +32,6 @@ class TestServiceImplTest {
 
         StudentService studentService = Mockito.mock(StudentService.class);
         when(studentService.getStudent()).thenReturn(student);
-
 
 
         TestServiceImpl test = new TestServiceImpl(studentService, questionService);

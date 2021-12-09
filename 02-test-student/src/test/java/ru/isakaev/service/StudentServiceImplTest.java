@@ -1,4 +1,3 @@
-
 package ru.isakaev.service;
 
 import org.assertj.core.api.Assertions;
