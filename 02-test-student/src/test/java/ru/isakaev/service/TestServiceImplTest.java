@@ -1,8 +1,12 @@
 package ru.isakaev.service;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
 import org.mockito.Mock;
 import org.mockito.Mockito;
+=======
+import org.mockito.Mockito;;
+>>>>>>> main
 import ru.isakaev.model.Question;
 import ru.isakaev.model.Student;
 
@@ -12,10 +16,12 @@ import java.lang.reflect.Field;
 import java.util.Scanner;
 import java.util.Set;
 
+import static org.mockito.Mockito.when;
+
 class TestServiceImplTest {
 
     @Test
-    void testStudent() throws NoSuchFieldException, IllegalAccessException {
+    void testStudent() throws IllegalAccessException, NoSuchFieldException {
 
         Student student = new Student("Ilnur", "Sakaev", 3);
         Set<Question> questionSet = Set.of(
@@ -26,10 +32,12 @@ class TestServiceImplTest {
         );
 
         QuestionService questionService = Mockito.mock(QuestionService.class);
-        Mockito.when(questionService.loadQuestions()).thenReturn(questionSet);
+
+        when(questionService.loadQuestions()).thenReturn(questionSet);
 
         StudentService studentService = Mockito.mock(StudentService.class);
-        Mockito.when(studentService.getStudent()).thenReturn(student);
+        when(studentService.getStudent()).thenReturn(student);
+
 
 
         TestServiceImpl test = new TestServiceImpl(studentService, questionService);
@@ -43,9 +51,8 @@ class TestServiceImplTest {
         Field scanner = test.getClass().getDeclaredField("scanner");
         scanner.setAccessible(true);
         scanner.set(test, new Scanner(new ByteArrayInputStream("three\ntwo\nexit".getBytes())));
+
         try {
-//            test.setPassingBarrier(1);
-//            test.setInputStream(new ByteArrayInputStream("three\ntwo\nexit".getBytes()));
             test.testStudent();
         } finally {
             System.setIn(stdin);
