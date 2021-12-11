@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionServiceImpl implements QuestionService{
 
-    private QuestionDao questionDao;
+    private final QuestionDao questionDao;
 
     private Set<Question> questions = new HashSet<>();
 

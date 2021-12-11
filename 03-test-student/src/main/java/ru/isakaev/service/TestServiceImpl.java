@@ -1,27 +1,21 @@
 package ru.isakaev.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.isakaev.model.Question;
 import ru.isakaev.model.Student;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 @Service
 @PropertySource("classpath:application.yml")
 public class TestServiceImpl implements TestService {
 
-    @Value("${passing.barrier}")
-    private Integer passingBarrier;
+    private final Integer passingBarrier;
 
-    @Value( "${lang.location}" )
-    private String location;
-
-    private final MessageSource source;
+    private final MessageSourceService source;
 
     private final StudentService studentService;
 
@@ -29,10 +23,11 @@ public class TestServiceImpl implements TestService {
 
     private final ReaderService readerService;
 
-
     private Set<Question> questions = new HashSet<>();
 
-    public TestServiceImpl(MessageSource source, StudentService studentService, QuestionService questionService, ReaderService readerService) {
+    public TestServiceImpl(@Value("${passing.barrier}")Integer passingBarrier, MessageSourceService source,
+                           StudentService studentService, QuestionService questionService, ReaderService readerService) {
+        this.passingBarrier = passingBarrier;
         this.source = source;
         this.studentService = studentService;
         this.questionService = questionService;
@@ -47,7 +42,7 @@ public class TestServiceImpl implements TestService {
             Student student = studentService.getStudent();
 
             if (student.getIsTestComplete()){
-                System.out.printf(source.getMessage("text.test.pass", null, new Locale(location)), student.getFirstName(), student.getLastName(), System.lineSeparator());
+                System.out.printf(source.getMessage("text.test.pass"), student.getFirstName(), student.getLastName(), System.lineSeparator());
                 testing = false;
                 continue;
             }
@@ -60,9 +55,9 @@ public class TestServiceImpl implements TestService {
 
             survey(student);
 
-            System.out.println(source.getMessage("text.test.exit", null, new Locale(location)));
+            System.out.println(source.getMessage("text.test.exit"));
             String checkExit = readerService.readFromConsole();
-            if (checkExit.equalsIgnoreCase(source.getMessage("text.test.check", null, new Locale(location)))){
+            if (checkExit.equalsIgnoreCase(source.getMessage("text.test.check"))){
                 testing = false;
             }
         }
@@ -71,10 +66,10 @@ public class TestServiceImpl implements TestService {
     private boolean isStudentHasAttempts(Student student) {
         int attCount = student.getAvailableAttempts();
         if(attCount < 1){
-            System.out.printf(source.getMessage("text.attempt.empty", null, new Locale(location)), student.getFirstName(), student.getLastName(), System.lineSeparator());
+            System.out.printf(source.getMessage("text.attempt.empty"), student.getFirstName(), student.getLastName(), System.lineSeparator());
             return false;
         }
-        System.out.printf(source.getMessage("text.attempt.exist", null, new Locale(location)), student.getFirstName(), student.getLastName(), attCount, System.lineSeparator());
+        System.out.printf(source.getMessage("text.attempt.exist"), student.getFirstName(), student.getLastName(), attCount, System.lineSeparator());
         return true;
     }
 
@@ -98,14 +93,14 @@ public class TestServiceImpl implements TestService {
                 }
             }
             if (countOfRightAnswer >= passingBarrier) {
-                System.out.printf(source.getMessage("text.test.finish.pass", null, new Locale(location)), countOfRightAnswer, System.lineSeparator());
+                System.out.printf(source.getMessage("text.test.finish.pass"), countOfRightAnswer, System.lineSeparator());
                 student.setIsTestComplete(true);
             } else {
-                System.out.printf(source.getMessage("text.test.finish.fail", null, new Locale(location)), countOfRightAnswer, (--attCount),  System.lineSeparator());
+                System.out.printf(source.getMessage("text.test.finish.fail"), countOfRightAnswer, (--attCount),  System.lineSeparator());
                 if (attCount > 0) {
-                    System.out.println(source.getMessage("text.test.finish.retry", null, new Locale(location)));
+                    System.out.println(source.getMessage("text.test.finish.retry"));
                     String checkYes = readerService.readFromConsole();
-                    String yesWord = source.getMessage("text.test.finish.check", null, new Locale(location));
+                    String yesWord = source.getMessage("text.test.finish.check");
                     if (checkYes.equalsIgnoreCase(yesWord)) {
                         oneMoreAttempt = true;
                     }
@@ -118,7 +113,7 @@ public class TestServiceImpl implements TestService {
     private String customizeQuestionForPrint(Question question){
 
         StringBuilder builder = new StringBuilder();
-        builder.append(source.getMessage("text.question", null, new Locale(location))).append(" : ").append(question.getTextQuestion()).append('?');
+        builder.append(source.getMessage("text.question")).append(" : ").append(question.getTextQuestion()).append('?');
         String[] answers = question.getAnswers();
         for (int i=0; i<answers.length; i++) {
             builder.append('\n');

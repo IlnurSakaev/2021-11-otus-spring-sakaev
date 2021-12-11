@@ -1,15 +1,11 @@
 package ru.isakaev.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.isakaev.model.Student;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -17,29 +13,26 @@ import java.util.Set;
 @PropertySource("classpath:application.yml")
 public class StudentServiceImpl implements StudentService {
 
-    @Value("${attempt.count}")
-    private Integer attemptCount;
+    private final Integer attemptCount;
 
-    @Value( "${lang.location}" )
-    private String location;
-
-    private final MessageSource source;
+    private final MessageSourceService source;
 
     private Set<Student> students = new HashSet<>();
 
     private final ReaderService readerService;
 
-    public StudentServiceImpl(@Qualifier("messageSource")MessageSource source, ReaderService readerService) {
+    public StudentServiceImpl( @Value("${attempt.count}")Integer attemptCount, MessageSourceService source, ReaderService readerService) {
+        this.attemptCount = attemptCount;
         this.source = source;
         this.readerService = readerService;
     }
 
     @Override
     public Student getStudent(){
-        System.out.println(source.getMessage("text.name", null, new Locale(location)));
+        System.out.println(source.getMessage("text.name"));
         String firstName = readerService.readFromConsole();
 
-        System.out.println(source.getMessage("text.lastname", null, new Locale(location)));
+        System.out.println(source.getMessage("text.lastname"));
         String lastName =  readerService.readFromConsole();
         Student student = null;
 

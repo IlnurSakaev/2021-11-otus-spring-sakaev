@@ -8,11 +8,9 @@ import lombok.Data;
 @Data
 public class Question {
 
-    private String textQuestion;
-
-    private String[] answers;
-
-    private String rightAnswer;
+    private final String textQuestion;
+    private final String[] answers;
+    private final String rightAnswer;
 
     public Question(String textQuestion, String[] answers, String rightAnswer) {
         this.textQuestion = textQuestion;

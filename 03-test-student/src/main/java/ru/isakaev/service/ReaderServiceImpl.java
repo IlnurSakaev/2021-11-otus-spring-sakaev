@@ -7,7 +7,7 @@ import java.util.Scanner;
 @Service
 public class ReaderServiceImpl implements ReaderService {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public String readFromConsole() {

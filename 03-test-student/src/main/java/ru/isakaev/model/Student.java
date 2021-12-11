@@ -7,8 +7,8 @@ import java.util.Objects;
 @Data
 public class Student {
 
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
     private Integer availableAttempts;
     private Boolean isTestComplete = false;
 

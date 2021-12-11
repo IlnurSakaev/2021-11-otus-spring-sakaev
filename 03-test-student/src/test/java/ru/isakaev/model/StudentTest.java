@@ -1,13 +1,11 @@
 package ru.isakaev.model;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
 
@@ -24,14 +22,18 @@ class StudentTest {
     }
 
     @Test
-    void setFirstName() {
-        student.setFirstName("Ivan");
+    void setFirstName() throws NoSuchFieldException, IllegalAccessException {
+        Field firstName = student.getClass().getDeclaredField("firstName");
+        firstName.setAccessible(true);
+        firstName.set(student,"Ivan");
         assertThat(student.getFirstName()).isEqualTo("Ivan");
     }
 
     @Test
-    void setLastName() {
-        student.setLastName("Petrov");
+    void setLastName() throws NoSuchFieldException, IllegalAccessException {
+        Field lastName = student.getClass().getDeclaredField("lastName");
+        lastName.setAccessible(true);
+        lastName.set(student,"Petrov");
         assertThat(student.getLastName()).isEqualTo("Petrov");
     }
 

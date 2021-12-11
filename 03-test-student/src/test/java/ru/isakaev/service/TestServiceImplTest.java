@@ -18,11 +18,8 @@ import java.util.Set;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@TestPropertySource(properties = {"location=ru","barrier=1"})
+@TestPropertySource(properties = {"barrier=1"})
 class TestServiceImplTest {
-
-    @Value( "${location}" )
-    private String location;
 
     @Value("${barrier}")
     private Integer passingBarrier;
@@ -41,7 +38,7 @@ class TestServiceImplTest {
     private ReaderService readerService;
 
     @MockBean
-    private MessageSource source;
+    private MessageSourceService source;
 
 
     @BeforeEach
@@ -66,21 +63,17 @@ class TestServiceImplTest {
         String exit = "exit";
         when(readerService.readFromConsole()).thenReturn(two, two, exit);
 
-        when(source.getMessage("text.attempt.exist", null, new Locale(location)))
+        when(source.getMessage("text.attempt.exist"))
                 .thenReturn("The student %s %s your have %s attempts %s");
-        when(source.getMessage("text.test.finish.pass", null, new Locale(location)))
+        when(source.getMessage("text.test.finish.pass"))
                 .thenReturn("Eee you pass test and have %s right answer! %s");
-        when(source.getMessage("text.test.exit", null, new Locale(location)))
+        when(source.getMessage("text.test.exit"))
                 .thenReturn("Enter \"EXIT\" if want to exit test or any line for test another student");
-        when(source.getMessage("text.test.check", null, new Locale(location)))
+        when(source.getMessage("text.test.check"))
                 .thenReturn("EXIT");
 
-        TestService test = new TestServiceImpl(source, studentService, questionService, readerService);
+        TestService test = new TestServiceImpl(passingBarrier, source, studentService, questionService, readerService);
 
-        //        location
-        Field location = test.getClass().getDeclaredField("location");
-        location.setAccessible(true);
-        location.set(test, this.location);
         //        passingBarrier
         Field passingBarrier = test.getClass().getDeclaredField("passingBarrier");
         passingBarrier.setAccessible(true);
@@ -91,33 +84,27 @@ class TestServiceImplTest {
     }
 
     @Test
-    void testStudent_void_success_without_availableAttempts() throws NoSuchFieldException, IllegalAccessException {
+    void testStudent_void_success_without_availableAttempts() {
         student.setAvailableAttempts(0);
         when(studentService.getStudent()).thenReturn(student);
 
-        when(source.getMessage("text.attempt.empty", null, new Locale(location)))
+        when(source.getMessage("text.attempt.empty"))
                 .thenReturn("The Student %s %s has not available attempt %s");
 
-        TestService test = new TestServiceImpl(source, studentService, questionService, readerService);
-        Field location = test.getClass().getDeclaredField("location");
-        location.setAccessible(true);
-        location.set(test, this.location);
+        TestService test = new TestServiceImpl(passingBarrier, source, studentService, questionService, readerService);
 
         test.testStudent();
     }
 
     @Test
-    void testStudent_void_success_with_TestComplete() throws NoSuchFieldException, IllegalAccessException {
+    void testStudent_void_success_with_TestComplete() {
         student.setIsTestComplete(true);
         when(studentService.getStudent()).thenReturn(student);
 
-        when(source.getMessage("text.test.pass", null, new Locale(location)))
+        when(source.getMessage("text.test.pass"))
                 .thenReturn("Student %s %s successfully pass test%s");
 
-        TestService test = new TestServiceImpl(source, studentService, questionService, readerService);
-        Field location = test.getClass().getDeclaredField("location");
-        location.setAccessible(true);
-        location.set(test, this.location);
+        TestService test = new TestServiceImpl(passingBarrier, source, studentService, questionService, readerService);
 
         test.testStudent();
     }
@@ -133,27 +120,23 @@ class TestServiceImplTest {
         String exit = "exit";
         when(readerService.readFromConsole()).thenReturn(two, two, "no", exit);
 
-        when(source.getMessage("text.attempt.exist", null, new Locale(location)))
+        when(source.getMessage("text.attempt.exist"))
                 .thenReturn("The student %s %s your have %s attempts %s");
-        when(source.getMessage("text.test.finish.fail", null, new Locale(location)))
+        when(source.getMessage("text.test.finish.fail"))
                 .thenReturn("You fail test and have %s right answer, and have %s attempts %s");
 
-        when(source.getMessage("text.test.finish.retry", null, new Locale(location)))
+        when(source.getMessage("text.test.finish.retry"))
                 .thenReturn("If you want try again enter RETRY");
 
-        when(source.getMessage("text.test.finish.check", null, new Locale(location)))
+        when(source.getMessage("text.test.finish.check"))
                 .thenReturn("RETRY");
-        when(source.getMessage("text.test.exit", null, new Locale(location)))
+        when(source.getMessage("text.test.exit"))
                 .thenReturn("Enter \"EXIT\" if want to exit test or any line for test another student");
-        when(source.getMessage("text.test.check", null, new Locale(location)))
+        when(source.getMessage("text.test.check"))
                 .thenReturn("EXIT");
 
-        TestService test = new TestServiceImpl(source, studentService, questionService, readerService);
+        TestService test = new TestServiceImpl(passingBarrier, source, studentService, questionService, readerService);
 
-        //        location
-        Field location = test.getClass().getDeclaredField("location");
-        location.setAccessible(true);
-        location.set(test, this.location);
         //        passingBarrier
         Field passingBarrier = test.getClass().getDeclaredField("passingBarrier");
         passingBarrier.setAccessible(true);
