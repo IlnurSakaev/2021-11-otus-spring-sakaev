@@ -27,6 +27,7 @@ class TestServiceImplTest {
         );
 
         QuestionService questionService = Mockito.mock(QuestionService.class);
+
         when(questionService.loadQuestions()).thenReturn(questionSet);
 
         StudentService studentService = Mockito.mock(StudentService.class);

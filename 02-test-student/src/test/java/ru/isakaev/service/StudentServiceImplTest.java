@@ -1,4 +1,3 @@
-
 package ru.isakaev.service;
 
 import org.assertj.core.api.Assertions;
@@ -19,7 +18,10 @@ class StudentServiceImplTest {
         Student testStudent = new Student("Ilnur", "Sakaev", 3);
         InputStream stdin = System.in;
 
-        //        scanner
+        Field attemptCount = studentService.getClass().getDeclaredField("attemptCount");
+        attemptCount.setAccessible(true);
+        attemptCount.set(studentService, 3);
+
         Field scanner = studentService.getClass().getDeclaredField("scanner");
         scanner.setAccessible(true);
         scanner.set(studentService, new Scanner(new ByteArrayInputStream("Ilnur\nSakaev".getBytes())));
