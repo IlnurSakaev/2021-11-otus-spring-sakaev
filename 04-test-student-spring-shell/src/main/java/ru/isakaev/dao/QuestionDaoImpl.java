@@ -1,11 +1,11 @@
 package ru.isakaev.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
+import ru.isakaev.logging.LogAnnotation;
 import ru.isakaev.util.YamlFactory;
 
 import java.io.InputStream;
@@ -30,6 +30,7 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
+    @LogAnnotation
     public InputStream getInputStream() {
         InputStream resourceAsStream = ClassLoader.getSystemClassLoader().getResourceAsStream(source.getMessage("file.path", null, new Locale(location)));
         return resourceAsStream;

@@ -12,12 +12,11 @@ import ru.isakaev.model.Question;
 import ru.isakaev.model.Student;
 
 import java.lang.reflect.Field;
-import java.util.Locale;
 import java.util.Set;
 
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.shell.interactive.enabled=false")
 @TestPropertySource(properties = {"barrier=1"})
 class TestServiceImplTest {
 

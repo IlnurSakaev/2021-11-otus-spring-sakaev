@@ -15,7 +15,7 @@ import java.util.Set;
 
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.shell.interactive.enabled=false")
 @TestPropertySource(properties = {"count=7"})
 class StudentServiceImplTest {
 
